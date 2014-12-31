@@ -28,7 +28,8 @@ public class Navigator implements WebElement {
 	}
 
 	public WebElement el() {
-		return el();
+		throwExceptionIfManyEls();
+		return webElements.get(0);
 	}
 
 	public List<WebElement> els() {
@@ -59,8 +60,8 @@ public class Navigator implements WebElement {
 	// Delegated methods
 	@Override
 	public void clear() {
-		for (final WebElement el : webElements) {
-			el().clear();
+		for (final WebElement webElement : webElements) {
+			webElement.clear();
 		}
 	}
 
@@ -71,36 +72,16 @@ public class Navigator implements WebElement {
 
 	}
 
-	/*
-	 * @deprecated use find instead
-	 */
 	@Override
-	@Deprecated
-	public Navigator findElement(final By arg0) {
+	public String getAttribute(final String attributeName) {
 		throwExceptionIfManyEls();
-		return new Navigator(el().findElement(arg0));
-	}
-
-	/*
-	 * @deprecated use find instead
-	 */
-	@Override
-	@Deprecated
-	public List<WebElement> findElements(final By arg0) {
-		throwExceptionIfManyEls();
-		return Lists.newArrayList((WebElement) new Navigator(el().findElement(arg0)));
+		return el().getAttribute(attributeName);
 	}
 
 	@Override
-	public String getAttribute(final String arg0) {
+	public String getCssValue(final String css) {
 		throwExceptionIfManyEls();
-		return el().getAttribute(arg0);
-	}
-
-	@Override
-	public String getCssValue(final String arg0) {
-		throwExceptionIfManyEls();
-		return el().getCssValue(arg0);
+		return el().getCssValue(css);
 	}
 
 	@Override
@@ -157,20 +138,41 @@ public class Navigator implements WebElement {
 		return true;
 	}
 
+	@Override
+	public void submit() {
+		throwExceptionIfManyEls();
+		el().submit();
+	}
+
+	/*
+	 * @deprecated use find instead
+	 */
+	@Override
+	@Deprecated
+	public Navigator findElement(final By arg0) {
+		throwExceptionIfManyEls();
+		return new Navigator(el().findElement(arg0));
+	}
+
+	/*
+	 * @deprecated use find instead
+	 */
+	@Override
+	@Deprecated
+	public List<WebElement> findElements(final By arg0) {
+		throwExceptionIfManyEls();
+		return Lists.newArrayList((WebElement) new Navigator(el().findElement(
+				arg0)));
+	}
+
 	/*
 	 * @deprecated use value method
 	 */
 	@Override
 	@Deprecated
-	public void sendKeys(final CharSequence... arg0) {
+	public void sendKeys(final CharSequence... chars) {
 		throwExceptionIfManyEls();
-		el().sendKeys(arg0);
-	}
-
-	@Override
-	public void submit() {
-		throwExceptionIfManyEls();
-		el().submit();
+		el().sendKeys(chars);
 	}
 
 }

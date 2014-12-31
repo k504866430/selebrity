@@ -21,9 +21,11 @@ public class Browser {
 	}
 
 	public static <E extends Page> E go(final Class<E> clazz) {
-		final String url = "";
+		final PageConfiguration pageConf = PageConfigurationManager
+				.loadConfig(clazz);
+		final String url = pageConf.getURL();
 		driver.get(url);
-		return null;
+		return verifyAt(clazz);
 	}
 
 	public static <E extends Page> E verifyAt(final Class<E> clazz) {
