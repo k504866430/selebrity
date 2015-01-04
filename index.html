@@ -47,8 +47,7 @@
 <a id="page-object-pattern" class="anchor" href="#page-object-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Page Object Pattern</h3>
 
 <pre><code>import static com.selebrity.seleniumsupport.Browser.*;
-@URL("https://www.google.com")
-@VerifyAt(title="Google")
+@Page(url="https://www.google.com", verifyTitle="Google")
 public class GoogleSearchPage extends Page{
   @FindBy(name="q")
   private WebElement q;
@@ -60,6 +59,7 @@ public class GoogleSearchPage extends Page{
 </code></pre>
 
 <pre><code>import static com.selebrity.seleniumsupport.Browser.*;
+@Page
 @VerifyAt(titleContains="Google Search")
 public class GoogleResultsPage extends Page{
   public void assertResult(String link){
@@ -68,10 +68,11 @@ public class GoogleResultsPage extends Page{
 }
 </code></pre>
 
-<pre><code>GoogleSearchPage searchPage = Browser.go(GoogleSearchPage.class);
-searchPage.search("selebrity");
-GoogleResultsPage resultsPage = Browser.verifyAt(GoogleResultsPage.class);
-resultsPage.assertResult("https://github.com/k504866430");
+<pre><code>{
+  GoogleSearchPage searchPage = Browser.go(GoogleSearchPage.class);
+  searchPage.search("selebrity");
+  GoogleResultsPage resultsPage = Browser.verifyAt(GoogleResultsPage.class);
+  resultsPage.assertResult("https://github.com/k504866430");
 }
 </code></pre>
 
